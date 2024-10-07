@@ -178,6 +178,7 @@ public class ProdConfig {
 }
 ```
 You can activate a profile using configuration files, environment variables, or JVM arguments.
+
 ## 8. Resource Management
 
 Spring Core provides a consistent way to manage different types of resources (files, URLs, classpath resources) through its Resource interface, abstracting the underlying resource handling.

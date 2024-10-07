@@ -1,40 +1,5 @@
 Beans and the Spring Container are fundamental concepts in the Spring Framework, serving as the backbone for building robust, scalable, and maintainable Java applications. Understanding these concepts is crucial for leveraging the full power of Spring's Inversion of Control (IoC) and Dependency Injection (DI) capabilities. This comprehensive guide delves into the intricacies of Beans and the Spring Container, exploring their definitions, configurations, lifecycles, scopes, and practical implementations within the Spring ecosystem.
 
-Table of Contents
-
-    Introduction to Beans and the Spring Container
-    What is a Spring Bean?
-        Bean Definition
-        Bean Metadata
-    The Spring IoC Container
-        BeanFactory vs. ApplicationContext
-        Common Implementations of ApplicationContext
-    Configuring Beans
-        1. XML-Based Configuration
-        2. Annotation-Based Configuration
-        3. Java-Based Configuration
-    Bean Scopes
-        Singleton
-        Prototype
-        Request
-        Session
-        Global Session
-        Application
-    Bean Lifecycle
-        Bean Lifecycle Phases
-        Lifecycle Callbacks
-        BeanPostProcessor
-    Advanced Bean Features
-        Factory Beans
-        Lazy Initialization
-        Bean Dependencies
-    Practical Examples
-        Example 1: XML-Based Configuration
-        Example 2: Annotation-Based Configuration
-        Example 3: Java-Based Configuration
-    Best Practices
-    Conclusion
-
 # Introduction to Beans and the Spring Container
 
 In the Spring Framework, Beans are the objects that form the backbone of your application and are managed by the Spring Container. The container is responsible for instantiating, configuring, and assembling these beans, handling their entire lifecycle from creation to destruction. This management is facilitated through the principles of Inversion of Control (IoC) and Dependency Injection (DI), which promote loose coupling and enhance the modularity of your application.
