@@ -1,36 +1,4 @@
 Bean Scopes are a fundamental concept in the Spring Framework that determine the lifecycle and visibility of Spring beans within an application context. Understanding bean scopes is essential for designing applications that are efficient, maintainable, and aligned with specific architectural requirements. This comprehensive guide delves into the intricacies of Bean Scopes in Spring, exploring their definitions, types, implementations, best practices, potential drawbacks, and practical examples to provide a thorough understanding of how to leverage them effectively in your Spring-based applications.
-Table of Contents
-
-    Introduction to Bean Scopes
-    Understanding Bean Scopes
-        What are Bean Scopes?
-        Importance of Bean Scopes
-    Built-in Bean Scopes in Spring
-        Singleton Scope
-        Prototype Scope
-        Request Scope
-        Session Scope
-        Global Session Scope
-        Websocket Scope
-    Custom Bean Scopes
-        Defining a Custom Scope
-        Registering a Custom Scope
-        Using Custom Scopes
-    Defining Bean Scopes
-        Using Annotations
-        Using XML Configuration
-        Using Java-Based Configuration
-    Bean Scopes in Spring Boot
-        Default Behavior
-        Configuring Bean Scopes
-    Best Practices for Bean Scopes
-    Potential Drawbacks and Considerations
-    Practical Examples
-        Example 1: Singleton and Prototype Scopes
-        Example 2: Request and Session Scopes in a Web Application
-        Example 3: Creating and Using a Custom Bean Scope
-    Conclusion
-    Further Reading and Resources
 
 Introduction to Bean Scopes
 

@@ -1,10 +1,13 @@
 # Spring Core Concepts Material
+
 Java Spring Core is the foundational module of the Spring Framework, which is one of the most popular and widely used frameworks for building enterprise-level Java applications. Spring Core provides the essential features and capabilities that underpin the entire Spring ecosystem, enabling developers to create robust, scalable, and maintainable applications. Below is an in-depth explanation of the key concepts and components of Java Spring Core.
+
 ## 1. Inversion of Control (IoC)
 
 Inversion of Control (IoC) is a fundamental principle in Spring Core. It refers to the reversal of the flow of control in a system, where the framework takes over the responsibility of managing the lifecycle and dependencies of objects, rather than the objects themselves managing their dependencies.
 
 **Key Points:**
+
 - **Decoupling:** IoC decouples the execution of a task from its implementation, allowing for more modular and flexible code.
 - **Control Shift:** Instead of the application code controlling the flow, the Spring container manages object creation, configuration, and lifecycle.
 
@@ -16,6 +19,7 @@ Types of Dependency Injection:
 **Constructor Injection:**
 Dependencies are provided through a class constructor.
 Ensures that the object is always in a valid state with all required dependencies.
+
 ```java
 
 public class UserService {
@@ -26,6 +30,7 @@ public class UserService {
     }
 }
 ```
+
 **Setter Injection:**
 Dependencies are provided through setter methods.
 Allows for optional dependencies and reconfigurability.
@@ -63,6 +68,7 @@ public class UserService {
 
 **Function:** The Spring container is responsible for creating and managing the lifecycle of beans, handling dependency injection, and managing configurations.
 Common Implementations:
+
 - **ApplicationContext:** A more feature-rich container suitable for most applications.
 - **BeanFactory:** A lightweight container providing basic DI features, primarily used for testing or in simple scenarios.
 
@@ -70,16 +76,16 @@ Common Implementations:
 
 - **Instantiation:** The container creates an instance of the bean.
 - **Populate Properties:** Dependencies are injected.
-BeanNameAware and other Aware Interfaces: The bean is aware of its container.
+  BeanNameAware and other Aware Interfaces: The bean is aware of its container.
 - **Pre-initialization:** BeanPostProcessors can modify the bean before initialization.
 - **InitializingBean and init-method:** Custom initialization logic is executed.
-Post-initialization: BeanPostProcessors can modify the bean after initialization.
+  Post-initialization: BeanPostProcessors can modify the bean after initialization.
 - **Ready to use:** The bean is fully initialized and ready for use.
 - **Destruction:** The container handles bean destruction, calling any destruction callbacks.
 
 ## 4. Configuration Metadata
 
-Configuration metadata tells the Spring container how to create and configure beans. 
+Configuration metadata tells the Spring container how to create and configure beans.
 
 There are three primary ways to provide this metadata:
 
@@ -98,7 +104,7 @@ Traditional method using XML files to define beans and their dependencies.
 
 ### 2. Annotation-Based Configuration:
 
-Uses annotations to declare beans and their dependencies directly in the code. 
+Uses annotations to declare beans and their dependencies directly in the code.
 
 ```java
 @Component
@@ -158,6 +164,7 @@ Example:
     <property name="value" value="#{2 * T(Math).PI}" />
 </bean>
 ```
+
 ## 7. Profiles and Environment Abstraction
 
 Spring Core allows defining profiles to segregate parts of the application configuration and make it only available in certain environments (e.g., development, testing, production).
@@ -177,6 +184,7 @@ public class ProdConfig {
     // Production-specific beans
 }
 ```
+
 You can activate a profile using configuration files, environment variables, or JVM arguments.
 
 ## 8. Resource Management
@@ -194,6 +202,7 @@ public void loadResource() {
     // Handle the resource
 }
 ```
+
 ## 9. Event Handling
 
 Spring Core includes an event-publishing mechanism that allows beans to publish and listen for events, enabling a decoupled communication model within the application.
@@ -230,6 +239,7 @@ public class EventPublisherBean {
     }
 }
 ```
+
 ## 10. Bean Scopes
 
 Spring Core supports various bean scopes, determining the lifecycle and visibility of beans within the application context.
@@ -248,6 +258,7 @@ Common Scopes:
 @Scope("prototype")
 public class PrototypeBean { }
 ```
+
 ## 11. Lazy Initialization
 
 By default, Spring creates and configures all singleton beans at startup. However, you can enable lazy initialization to create beans only when they are needed, which can improve application startup time and resource usage.
