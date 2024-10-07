@@ -12,9 +12,11 @@ In the Spring Framework, a bean is an object that is instantiated, assembled, an
 - **Modularity and Reusability:** Scoped beans can enhance the modularity and reusability of components.
 
 # Understanding Bean Scopes
+
 ## What are Bean Scopes?
 
 **Bean Scopes** in Spring define the lifecycle and visibility of beans within the Spring IoC container. They determine how many instances of a bean are created, how they are shared, and when they are destroyed. Spring provides several built-in scopes, each tailored to different use cases and application architectures.
+
 ## Importance of Bean Scopes
 
 Choosing the right bean scope is vital for:
@@ -27,6 +29,7 @@ Choosing the right bean scope is vital for:
 # Built-in Bean Scopes in Spring
 
 Spring offers multiple built-in bean scopes to cater to different application needs. Understanding each scope's characteristics is essential for appropriate usage.
+
 ## Singleton Scope
 
 - **Definition:** A single instance of the bean is created and shared across the entire Spring container.
@@ -46,6 +49,7 @@ public class SingletonBean {
     // Bean implementation
 }
 ```
+
 ## Prototype Scope
 
 - **Definition:** A new instance of the bean is created every time it is requested from the container.
@@ -64,6 +68,7 @@ public class PrototypeBean {
     // Bean implementation
 }
 ```
+
 ## Request Scope
 
 - **Definition:** A new bean instance is created for each HTTP request.
@@ -85,6 +90,7 @@ public class RequestScopedBean {
     // Bean implementation
 }
 ```
+
 ## Session Scope
 
 - **Definition:** A new bean instance is created for each HTTP session.
@@ -104,6 +110,7 @@ public class SessionScopedBean {
     // Bean implementation
 }
 ```
+
 ## Global Session Scope
 
 - **Definition:** Applicable in a Portlet context, a single bean instance is shared across all portlet sessions.
@@ -125,6 +132,7 @@ public class GlobalSessionScopedBean {
     // Bean implementation
 }
 ```
+
 ## Websocket Scope
 
 - **Definition:** A new bean instance is created for each WebSocket.
@@ -144,9 +152,11 @@ public class WebSocketScopedBean {
     // Bean implementation
 }
 ```
+
 # Custom Bean Scopes
 
 Spring allows developers to define custom bean scopes to address specific application requirements that are not covered by the built-in scopes.
+
 ## Defining a Custom Scope
 
 To define a custom scope, you need to implement the `Scope` interface provided by Spring. This involves defining how beans are stored, retrieved, and cleaned up within the custom scope.
@@ -155,7 +165,8 @@ To define a custom scope, you need to implement the `Scope` interface provided b
 
 A common custom scope is the Thread Scope, where each thread has its own bean instance.
 
-1. **Implement the Scope Interface:**
+1.  **Implement the Scope Interface:**
+
     ```java
     import org.springframework.beans.factory.ObjectFactory;
     import org.springframework.beans.factory.config.Scope;
@@ -190,7 +201,8 @@ A common custom scope is the Thread Scope, where each thread has its own bean in
         }
     }
     ```
-2. **Register the Custom Scope:**
+
+2.  **Register the Custom Scope:**
 
     ```java
     import org.springframework.beans.factory.config.CustomScopeConfigurer;
@@ -208,19 +220,21 @@ A common custom scope is the Thread Scope, where each thread has its own bean in
         }
     }
     ```
-3. **Using the Custom Scope:**
 
-    ```java
-    import org.springframework.stereotype.Component;
-    import org.springframework.context.annotation.Scope;
+3.  **Using the Custom Scope:**
 
-    @Component
-    @Scope("thread")
-    public class ThreadScopedBean {
-        // Bean implementation
-    }
-    ```
-**Explanation:**
+        ```java
+        import org.springframework.stereotype.Component;
+        import org.springframework.context.annotation.Scope;
+
+        @Component
+        @Scope("thread")
+        public class ThreadScopedBean {
+            // Bean implementation
+        }
+        ```
+
+    **Explanation:**
 
 - The `ThreadScope` class defines how beans are managed within the thread scope.
 - The `CustomScopeConfigurer` registers the new `thread` scope with the Spring container.
@@ -229,6 +243,7 @@ A common custom scope is the Thread Scope, where each thread has its own bean in
 ### Registering a Custom Scope
 
 Custom scopes must be registered with the Spring container before they can be used. This is typically done using `CustomScopeConfigurer` in a configuration class, as shown in the previous example.
+
 ### Using Custom Scopes
 
 Once a custom scope is defined and registered, you can use it by specifying the scope name in the `@Scope` annotation or XML configuration.
@@ -245,9 +260,11 @@ public class ThreadScopedService {
     // Bean implementation
 }
 ```
+
 # Defining Bean Scopes
 
 Bean scopes can be defined using various configuration methods in Spring, including annotations, XML configuration, and Java-based configuration. Modern Spring applications predominantly use annotations and Java-based configurations for their simplicity and type safety.
+
 ## Using Annotations
 
 Annotations provide a concise and declarative way to define bean scopes directly within the bean classes.
@@ -264,6 +281,7 @@ public class PrototypeBean {
     // Bean implementation
 }
 ```
+
 **Common Scope Annotations:**
 
 - `@Scope("singleton")`: Defines a singleton scoped bean.
@@ -285,6 +303,7 @@ public class RequestScopedBean {
     // Bean implementation
 }
 ```
+
 ## Using XML Configuration
 
 Although less common in modern applications, XML configuration allows defining bean scopes in XML files.
@@ -295,17 +314,18 @@ Although less common in modern applications, XML configuration allows defining b
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="singletonBean" class="com.example.SingletonBean" scope="singleton"/>
-    
+
     <bean id="prototypeBean" class="com.example.PrototypeBean" scope="prototype"/>
-    
+
     <bean id="requestScopedBean" class="com.example.RequestScopedBean" scope="request"/>
-    
+
 </beans>
 ```
+
 ## Using Java-Based Configuration
 
 Java-based configuration, introduced with Spring 3.0, provides type-safe and refactoring-friendly ways to define bean scopes using `@Bean` methods within `@Configuration` classes.
@@ -340,6 +360,7 @@ public class AppConfig {
     }
 }
 ```
+
 **Advantages of Java-Based Configuration:**
 
 - **Type Safety:** Compile-time checking of bean configurations.
@@ -349,6 +370,7 @@ public class AppConfig {
 # Bean Scopes in Spring Boot
 
 Spring Boot builds upon the Spring Framework's capabilities, offering conventions and defaults that streamline bean scope management.
+
 ## Default Behavior
 
 - **Singleton Scope:** Beans are singleton by default in Spring Boot, aligning with Spring's default behavior.
@@ -371,6 +393,7 @@ public class SessionScopedBean {
     // Bean implementation
 }
 ```
+
 **External Configuration:**
 
 Profiles can be used in Spring Boot to manage bean scopes dynamically across different environments (development, testing, production).
@@ -390,58 +413,59 @@ public class WebRequestScopedBean {
     // Bean implementation
 }
 ```
+
 # Best Practices for Bean Scopes
 
 Adhering to best practices ensures that bean scopes are used effectively, enhancing application performance, maintainability, and scalability.
 
 1. **Understand Default Scope:**
-    Remember that beans are singleton by default. Explicitly specify other scopes only when necessary.
+   Remember that beans are singleton by default. Explicitly specify other scopes only when necessary.
 
 2. **Use Prototype Scope Judiciously:**
-    Prototype beans can lead to increased memory usage if overused. Consider whether the bean truly requires multiple instances.
+   Prototype beans can lead to increased memory usage if overused. Consider whether the bean truly requires multiple instances.
 
-1. **Prefer Scoped Proxies for Non-Singleton Beans:**
-    When injecting request or session-scoped beans into singleton beans, use scoped proxies to manage the lifecycle correctly.
+3. **Prefer Scoped Proxies for Non-Singleton Beans:**
+   When injecting request or session-scoped beans into singleton beans, use scoped proxies to manage the lifecycle correctly.
 
-    **Example:**
+   **Example:**
 
-    ```java
-    import org.springframework.context.annotation.Bean;
-    import org.springframework.context.annotation.Configuration;
-    import org.springframework.context.annotation.Scope;
-    import org.springframework.context.annotation.ScopedProxyMode;
-    import org.springframework.web.context.WebApplicationContext;
+   ```java
+   import org.springframework.context.annotation.Bean;
+   import org.springframework.context.annotation.Configuration;
+   import org.springframework.context.annotation.Scope;
+   import org.springframework.context.annotation.ScopedProxyMode;
+   import org.springframework.web.context.WebApplicationContext;
 
-    @Configuration
-    public class ProxyConfig {
+   @Configuration
+   public class ProxyConfig {
 
-        @Bean
-        @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
-        public RequestScopedBean requestScopedBean() {
-            return new RequestScopedBean();
-        }
-    }
-    ```
+       @Bean
+       @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
+       public RequestScopedBean requestScopedBean() {
+           return new RequestScopedBean();
+       }
+   }
+   ```
 
-1. **Leverage Profiles for Environment-Specific Scopes:**
-        Use Spring Profiles to manage bean scopes and configurations across different environments seamlessly.
+4. **Leverage Profiles for Environment-Specific Scopes:**
+   Use Spring Profiles to manage bean scopes and configurations across different environments seamlessly.
 
-1. **Avoid Overcomplicating Scopes:**
-    Stick to standard scopes unless a custom scope is absolutely necessary. Custom scopes can introduce complexity.
+5. **Avoid Overcomplicating Scopes:**
+   Stick to standard scopes unless a custom scope is absolutely necessary. Custom scopes can introduce complexity.
 
-1. **Ensure Thread Safety:**
-    For singleton beans that hold state, ensure thread safety to prevent concurrency issues.
+6. **Ensure Thread Safety:**
+   For singleton beans that hold state, ensure thread safety to prevent concurrency issues.
 
-1. **Document Bean Scopes:**
-    Clearly document the scope of each bean to aid in maintenance and onboarding of new developers.
+7. **Document Bean Scopes:**
+   Clearly document the scope of each bean to aid in maintenance and onboarding of new developers.
 
-1. **Monitor Resource Usage:**
-    Use profiling tools to monitor the impact of bean scopes on application memory and performance.
+8. **Monitor Resource Usage:**
+   Use profiling tools to monitor the impact of bean scopes on application memory and performance.
 
-1. **Use Scoped Proxies When Necessary:**
-    Scoped proxies help manage the injection of beans with narrower scopes into beans with broader scopes, preventing lifecycle mismatches.
+9. **Use Scoped Proxies When Necessary:**
+   Scoped proxies help manage the injection of beans with narrower scopes into beans with broader scopes, preventing lifecycle mismatches.
 
-1. **Test Scoped Beans Thoroughly:**
+10. **Test Scoped Beans Thoroughly:**
     Ensure that beans with non-singleton scopes behave as expected across different scenarios and usage patterns.
 
 # Potential Drawbacks and Considerations
@@ -449,25 +473,25 @@ Adhering to best practices ensures that bean scopes are used effectively, enhanc
 While bean scopes provide flexibility in managing bean lifecycles, they come with certain challenges and considerations that developers must address to maintain application quality.
 
 1. **Increased Complexity with Multiple Scopes:**
-    Managing various scopes can complicate the application architecture, making it harder to understand and maintain.
+   Managing various scopes can complicate the application architecture, making it harder to understand and maintain.
 
 1. **Memory Overhead:**
-    Non-singleton scopes like prototype, request, and session can lead to increased memory consumption if not managed properly.
+   Non-singleton scopes like prototype, request, and session can lead to increased memory consumption if not managed properly.
 
 1. **Thread Safety Concerns:**
-    Singleton beans that are not thread-safe can cause issues in multi-threaded environments. Proper synchronization or stateless designs are necessary.
+   Singleton beans that are not thread-safe can cause issues in multi-threaded environments. Proper synchronization or stateless designs are necessary.
 
 1. **Scoped Bean Injection Issues:**
-    Injecting beans with narrower scopes into broader-scoped beans (e.g., request-scoped beans into singleton beans) can lead to lifecycle mismatches and unexpected behaviors if not handled with scoped proxies.
+   Injecting beans with narrower scopes into broader-scoped beans (e.g., request-scoped beans into singleton beans) can lead to lifecycle mismatches and unexpected behaviors if not handled with scoped proxies.
 
 1. **Lifecycle Management Challenges:**
-    Non-singleton beans may require explicit destruction callbacks or proper resource management to prevent leaks.
+   Non-singleton beans may require explicit destruction callbacks or proper resource management to prevent leaks.
 
 1. **Potential for Configuration Errors:**
-    Incorrectly specifying bean scopes can lead to runtime errors, such as missing beans or unintended singleton behavior.
+   Incorrectly specifying bean scopes can lead to runtime errors, such as missing beans or unintended singleton behavior.
 
 1. **Testing Complexity:**
-    Scoped beans, especially in web contexts, can complicate unit and integration testing due to their dependencies on specific environments or contexts.
+   Scoped beans, especially in web contexts, can complicate unit and integration testing due to their dependencies on specific environments or contexts.
 
 **Mitigation Strategies:**
 
@@ -480,6 +504,7 @@ While bean scopes provide flexibility in managing bean lifecycles, they come wit
 # Practical Examples
 
 To illustrate the application of bean scopes in Spring, let's explore several practical examples covering different scenarios and scopes.
+
 ## Example 1: Singleton and Prototype Scopes
 
 **Scenario:**
@@ -490,70 +515,73 @@ Demonstrate the difference between singleton and prototype bean scopes by inject
 
 1. Define Singleton and Prototype Beans:
 
-    ```java
-    import org.springframework.stereotype.Component;
+   ```java
+   import org.springframework.stereotype.Component;
 
-    @Component
-    public class SingletonBean {
-        public SingletonBean() {
-            System.out.println("SingletonBean instance created.");
-        }
-    }
+   @Component
+   public class SingletonBean {
+       public SingletonBean() {
+           System.out.println("SingletonBean instance created.");
+       }
+   }
 
-    @Component
-    public class PrototypeBean {
-        public PrototypeBean() {
-            System.out.println("PrototypeBean instance created.");
-        }
-    }
-    ```
+   @Component
+   public class PrototypeBean {
+       public PrototypeBean() {
+           System.out.println("PrototypeBean instance created.");
+       }
+   }
+   ```
+
 2. Define a Client Bean that Injects Both Beans:
 
-    ```java
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.stereotype.Component;
+   ```java
+   import org.springframework.beans.factory.annotation.Autowired;
+   import org.springframework.stereotype.Component;
 
-    @Component
-    public class ClientBean {
+   @Component
+   public class ClientBean {
 
-        @Autowired
-        private SingletonBean singletonBean;
+       @Autowired
+       private SingletonBean singletonBean;
 
-        @Autowired
-        private PrototypeBean prototypeBean;
+       @Autowired
+       private PrototypeBean prototypeBean;
 
-        public void displayBeans() {
-            System.out.println("SingletonBean: " + singletonBean);
-            System.out.println("PrototypeBean: " + prototypeBean);
-        }
-    }
-    ```
+       public void displayBeans() {
+           System.out.println("SingletonBean: " + singletonBean);
+           System.out.println("PrototypeBean: " + prototypeBean);
+       }
+   }
+   ```
+
 3. Main Application:
 
-    ```java
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.boot.CommandLineRunner;
-    import org.springframework.boot.SpringApplication;
-    import org.springframework.boot.autoconfigure.SpringBootApplication;
-    import com.example.ClientBean;
+   ```java
+   import org.springframework.beans.factory.annotation.Autowired;
+   import org.springframework.boot.CommandLineRunner;
+   import org.springframework.boot.SpringApplication;
+   import org.springframework.boot.autoconfigure.SpringBootApplication;
+   import com.example.ClientBean;
 
-    @SpringBootApplication
-    public class Application implements CommandLineRunner {
+   @SpringBootApplication
+   public class Application implements CommandLineRunner {
 
-        @Autowired
-        private ClientBean clientBean;
+       @Autowired
+       private ClientBean clientBean;
 
-        public static void main(String[] args) {
-            SpringApplication.run(Application.class, args);
-        }
+       public static void main(String[] args) {
+           SpringApplication.run(Application.class, args);
+       }
 
-        @Override
-        public void run(String... args) throws Exception {
-            clientBean.displayBeans();
-            clientBean.displayBeans();
-        }
-    }
-    ```
+       @Override
+       public void run(String... args) throws Exception {
+           clientBean.displayBeans();
+           clientBean.displayBeans();
+       }
+   }
+   ```
+
 4. Console Output:
 
 ```graphql
@@ -565,6 +593,7 @@ PrototypeBean: com.example.PrototypeBean@5d6e7f8
 SingletonBean: com.example.SingletonBean@1a2b3c4
 PrototypeBean: com.example.PrototypeBean@9a0b1c2
 ```
+
 **Explanation:**
 
 - **SingletonBean:** Only one instance is created when the application starts. Both calls to displayBeans() refer to the same SingletonBean instance.
@@ -575,27 +604,29 @@ PrototypeBean: com.example.PrototypeBean@9a0b1c2
 To observe the prototype scope properly, modify the ClientBean to request the prototype bean each time.
 
 1. Modify ClientBean to Use ObjectFactory:
-    ```java
-    import org.springframework.beans.factory.ObjectFactory;
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.stereotype.Component;
 
-    @Component
-    public class ClientBean {
+   ```java
+   import org.springframework.beans.factory.ObjectFactory;
+   import org.springframework.beans.factory.annotation.Autowired;
+   import org.springframework.stereotype.Component;
 
-        @Autowired
-        private SingletonBean singletonBean;
+   @Component
+   public class ClientBean {
 
-        @Autowired
-        private ObjectFactory<PrototypeBean> prototypeBeanFactory;
+       @Autowired
+       private SingletonBean singletonBean;
 
-        public void displayBeans() {
-            PrototypeBean prototypeBean = prototypeBeanFactory.getObject();
-            System.out.println("SingletonBean: " + singletonBean);
-            System.out.println("PrototypeBean: " + prototypeBean);
-        }
-    }
-    ```
+       @Autowired
+       private ObjectFactory<PrototypeBean> prototypeBeanFactory;
+
+       public void displayBeans() {
+           PrototypeBean prototypeBean = prototypeBeanFactory.getObject();
+           System.out.println("SingletonBean: " + singletonBean);
+           System.out.println("PrototypeBean: " + prototypeBean);
+       }
+   }
+   ```
+
 2. Run the Application:
 
 Console Output:
@@ -610,6 +641,7 @@ Console Output:
     SingletonBean: com.example.SingletonBean@1a2b3c4
     PrototypeBean: com.example.PrototypeBean@9a0b1c2
     ```
+
 **Explanation:**
 
 Each call to displayBeans() now retrieves a new PrototypeBean instance via ObjectFactory, showcasing the prototype behavior accurately.
@@ -622,7 +654,7 @@ Implement request-scoped and session-scoped beans in a Spring Boot web applicati
 
 **Implementation:**
 
-1. Define RequestScopedBean and SessionScopedBean:
+1.  Define RequestScopedBean and SessionScopedBean:
 
     ```java
     import org.springframework.stereotype.Component;
@@ -657,7 +689,8 @@ Implement request-scoped and session-scoped beans in a Spring Boot web applicati
         }
     }
     ```
-1. Create a Controller that Uses These Beans:
+
+1.  Create a Controller that Uses These Beans:
 
     ```java
     import org.springframework.beans.factory.annotation.Autowired;
@@ -697,34 +730,36 @@ Implement request-scoped and session-scoped beans in a Spring Boot web applicati
         }
     }
     ```
-1. Run the Application and Test:
 
-    - Set Request Data:
+1.  Run the Application and Test:
 
-        ```bash
-        GET http://localhost:8080/setRequestData?data=HelloRequest
-        Response: "Request data set to: HelloRequest"
-        ```
+        - Set Request Data:
 
-    - Get Request Data:
+            ```bash
+            GET http://localhost:8080/setRequestData?data=HelloRequest
+            Response: "Request data set to: HelloRequest"
+            ```
 
-        ```bash
-        GET http://localhost:8080/getRequestData
-        Response: "Request data: HelloRequest"
-        ```
-    - Set Session Data:
+        - Get Request Data:
 
-        ```bash
-        GET http://localhost:8080/setSessionData?data=HelloSession
-        Response: "Session data set to: HelloSession"
-        ```
-    - Get Session Data:
+            ```bash
+            GET http://localhost:8080/getRequestData
+            Response: "Request data: HelloRequest"
+            ```
+        - Set Session Data:
 
-        ```bash
-        GET http://localhost:8080/getSessionData
-        Response: "Session data: HelloSession"
-        ```
-**Explanation:**
+            ```bash
+            GET http://localhost:8080/setSessionData?data=HelloSession
+            Response: "Session data set to: HelloSession"
+            ```
+        - Get Session Data:
+
+            ```bash
+            GET http://localhost:8080/getSessionData
+            Response: "Session data: HelloSession"
+            ```
+
+    **Explanation:**
 
 - **RequestScopedBean:** Data is specific to a single HTTP request. Each request to /setRequestData and /getRequestData operates within its own request scope.
 - **SessionScopedBean:** Data persists across multiple HTTP requests within the same session. Setting and retrieving session data maintains state across different endpoints.
@@ -739,123 +774,128 @@ Implement a custom Thread Scope where each thread has its own instance of a bean
 
 1. Define the Custom Scope:
 
-    ```java
-    import org.springframework.beans.factory.ObjectFactory;
-    import org.springframework.beans.factory.config.Scope;
+   ```java
+   import org.springframework.beans.factory.ObjectFactory;
+   import org.springframework.beans.factory.config.Scope;
 
-    import java.util.HashMap;
-    import java.util.Map;
+   import java.util.HashMap;
+   import java.util.Map;
 
-    public class ThreadScope implements Scope {
+   public class ThreadScope implements Scope {
 
-        private final ThreadLocal<Map<String, Object>> threadScope = ThreadLocal.withInitial(HashMap::new);
+       private final ThreadLocal<Map<String, Object>> threadScope = ThreadLocal.withInitial(HashMap::new);
 
-        @Override
-        public Object get(String name, ObjectFactory<?> objectFactory) {
-            Map<String, Object> scope = threadScope.get();
-            return scope.computeIfAbsent(name, k -> objectFactory.getObject());
-        }
+       @Override
+       public Object get(String name, ObjectFactory<?> objectFactory) {
+           Map<String, Object> scope = threadScope.get();
+           return scope.computeIfAbsent(name, k -> objectFactory.getObject());
+       }
 
-        @Override
-        public Object remove(String name) {
-            return threadScope.get().remove(name);
-        }
+       @Override
+       public Object remove(String name) {
+           return threadScope.get().remove(name);
+       }
 
-        @Override
-        public void registerDestructionCallback(String name, Runnable callback) {
-            // Optional: Implement if destruction is needed
-        }
+       @Override
+       public void registerDestructionCallback(String name, Runnable callback) {
+           // Optional: Implement if destruction is needed
+       }
 
-        @Override
-        public Object resolveContextualObject(String key) {
-            return null;
-        }
+       @Override
+       public Object resolveContextualObject(String key) {
+           return null;
+       }
 
-        @Override
-        public String getConversationId() {
-            return Thread.currentThread().getName();
-        }
-    }
-    ```
+       @Override
+       public String getConversationId() {
+           return Thread.currentThread().getName();
+       }
+   }
+   ```
+
 1. Register the Custom Scope:
 
-    ```java
-    import org.springframework.beans.factory.config.CustomScopeConfigurer;
-    import org.springframework.context.annotation.Bean;
-    import org.springframework.context.annotation.Configuration;
+   ```java
+   import org.springframework.beans.factory.config.CustomScopeConfigurer;
+   import org.springframework.context.annotation.Bean;
+   import org.springframework.context.annotation.Configuration;
 
-    @Configuration
-    public class CustomScopeConfig {
+   @Configuration
+   public class CustomScopeConfig {
 
-        @Bean
-        public static CustomScopeConfigurer customScopeConfigurer() {
-            CustomScopeConfigurer configurer = new CustomScopeConfigurer();
-            configurer.addScope("thread", new ThreadScope());
-            return configurer;
-        }
-    }
-    ```
-3. Define a Bean with the Custom Scope:
+       @Bean
+       public static CustomScopeConfigurer customScopeConfigurer() {
+           CustomScopeConfigurer configurer = new CustomScopeConfigurer();
+           configurer.addScope("thread", new ThreadScope());
+           return configurer;
+       }
+   }
+   ```
 
-    ```java
-    import org.springframework.stereotype.Component;
-    import org.springframework.context.annotation.Scope;
+1. Define a Bean with the Custom Scope:
 
-    @Component
-    @Scope("thread")
-    public class ThreadScopedBean {
-        private int counter = 0;
+   ```java
+   import org.springframework.stereotype.Component;
+   import org.springframework.context.annotation.Scope;
 
-        public void increment() {
-            counter++;
-            System.out.println("Thread: " + Thread.currentThread().getName() + ", Counter: " + counter);
-        }
-    }
-    ```
+   @Component
+   @Scope("thread")
+   public class ThreadScopedBean {
+       private int counter = 0;
+
+       public void increment() {
+           counter++;
+           System.out.println("Thread: " + Thread.currentThread().getName() + ", Counter: " + counter);
+       }
+   }
+   ```
+
 1. Using the ThreadScopedBean in a Multi-Threaded Context:
 
-    ```java
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.boot.CommandLineRunner;
-    import org.springframework.boot.SpringApplication;
-    import org.springframework.boot.autoconfigure.SpringBootApplication;
+   ```java
+   import org.springframework.beans.factory.annotation.Autowired;
+   import org.springframework.boot.CommandLineRunner;
+   import org.springframework.boot.SpringApplication;
+   import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-    @SpringBootApplication
-    public class Application implements CommandLineRunner {
+   @SpringBootApplication
+   public class Application implements CommandLineRunner {
 
-        @Autowired
-        private ThreadScopedBean threadScopedBean;
+       @Autowired
+       private ThreadScopedBean threadScopedBean;
 
-        public static void main(String[] args) {
-            SpringApplication.run(Application.class, args);
-        }
+       public static void main(String[] args) {
+           SpringApplication.run(Application.class, args);
+       }
 
-        @Override
-        public void run(String... args) throws Exception {
-            Runnable task = () -> {
-                threadScopedBean.increment();
-                threadScopedBean.increment();
-            };
+       @Override
+       public void run(String... args) throws Exception {
+           Runnable task = () -> {
+               threadScopedBean.increment();
+               threadScopedBean.increment();
+           };
 
-            Thread thread1 = new Thread(task, "Thread-1");
-            Thread thread2 = new Thread(task, "Thread-2");
+           Thread thread1 = new Thread(task, "Thread-1");
+           Thread thread2 = new Thread(task, "Thread-2");
 
-            thread1.start();
-            thread2.start();
+           thread1.start();
+           thread2.start();
 
-            thread1.join();
-            thread2.join();
-        }
-    }
-    ```
+           thread1.join();
+           thread2.join();
+       }
+   }
+   ```
+
 1. Console Output:
 
-    ```mathematica
-    Thread: Thread-1, Counter: 1
-    Thread: Thread-1, Counter: 2
-    Thread: Thread-2, Counter: 1
-    Thread: Thread-2, Counter: 2
-    ```
+   ```mathematica
+   Thread: Thread-1, Counter: 1
+   Thread: Thread-1, Counter: 2
+   Thread: Thread-2, Counter: 1
+   Thread: Thread-2, Counter: 2
+   ```
+
 **Explanation:**
 
 - **ThreadScopedBean:** Each thread has its own instance of ThreadScopedBean, maintaining separate counter values.

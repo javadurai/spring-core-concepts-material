@@ -5,6 +5,7 @@ Beans and the Spring Container are fundamental concepts in the Spring Framework,
 In the Spring Framework, Beans are the objects that form the backbone of your application and are managed by the Spring Container. The container is responsible for instantiating, configuring, and assembling these beans, handling their entire lifecycle from creation to destruction. This management is facilitated through the principles of Inversion of Control (IoC) and Dependency Injection (DI), which promote loose coupling and enhance the modularity of your application.
 
 # What is a Spring Bean?
+
 ## Bean Definition
 
 A Spring Bean is simply an object that is instantiated, assembled, and managed by the Spring IoC container. Beans are the fundamental building blocks of a Spring application, representing services, repositories, controllers, and other components.
@@ -38,13 +39,14 @@ Spring provides two primary interfaces for IoC containers:
 - **Limitations:** Lacks advanced features like event propagation, declarative mechanisms, and easier integration with Spring AOP.
 
 **2. ApplicationContext:**
+
 - **Description:** A more advanced container, building upon BeanFactory and offering additional features.
 - **Use Case:** Most Spring applications, especially those requiring enterprise-level features.
 - **Advantages:**
-    - Supports internationalization (i18n).
-    - Provides event propagation.
-    - Integrates seamlessly with Spring AOP.
-    - Offers easier integration with various Spring modules.
+  - Supports internationalization (i18n).
+  - Provides event propagation.
+  - Integrates seamlessly with Spring AOP.
+  - Offers easier integration with various Spring modules.
 
 **Recommendation:** For most applications, especially those using Spring Boot or requiring advanced features, ApplicationContext is the preferred choice.
 
@@ -59,6 +61,7 @@ Spring offers several implementations of the `ApplicationContext` interface:
 ```java
     ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 ```
+
 **2. FileSystemXmlApplicationContext:**
 
 **Description:** Loads context definitions from XML files located in the filesystem.
@@ -67,6 +70,7 @@ Spring offers several implementations of the `ApplicationContext` interface:
 ```java
 ApplicationContext context = new FileSystemXmlApplicationContext("/path/to/applicationContext.xml");
 ```
+
 **3. AnnotationConfigApplicationContext:**
 
 **Description:** Loads context definitions from Java-based configuration classes.
@@ -75,6 +79,7 @@ ApplicationContext context = new FileSystemXmlApplicationContext("/path/to/appli
 ```java
 ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 ```
+
 **4. WebApplicationContext:**
 **Description:** Designed for web-based applications, integrating with the ServletContext.
 **Usage Example:** Automatically used in Spring MVC applications.
@@ -94,25 +99,27 @@ Spring offers multiple ways to configure beans, allowing developers to choose th
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
+
     <!-- Define a bean for UserRepository -->
     <bean id="userRepository" class="com.example.repository.UserRepositoryImpl" />
-    
+
     <!-- Define a bean for UserService with constructor injection -->
     <bean id="userService" class="com.example.service.UserService">
         <constructor-arg ref="userRepository" />
     </bean>
-    
+
 </beans>
 ```
+
 **Usage:**
 
 ```java
 ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 UserService userService = context.getBean("userService", UserService.class);
 ```
+
 **Pros:**
 
 - Clear separation of configuration and code.
@@ -191,6 +198,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.example")
 public class AppConfig {}
 ```
+
 **Usage:**
 
 ```java
@@ -198,6 +206,7 @@ ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.cl
 UserService userService = context.getBean(UserService.class);
 userService.registerUser(new User("Alice"));
 ```
+
 **Pros:**
 
 - Less verbose and more intuitive.
@@ -239,6 +248,7 @@ public class AppConfig {
     }
 }
 ```
+
 **Usage:**
 
 ```java
@@ -246,6 +256,7 @@ ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.cl
 UserService userService = context.getBean(UserService.class);
 userService.registerUser(new User("Bob"));
 ```
+
 **Pros:**
 
 - Type-safe and refactor-friendly.
@@ -265,8 +276,8 @@ Bean Scope defines the lifecycle and visibility of a bean within the Spring cont
 
 - **Description:** (Default Scope) Only one instance of the bean is created per Spring IoC container.
 - **Characteristics:**
-    Shared across the entire application.
-    Suitable for stateless beans.
+  Shared across the entire application.
+  Suitable for stateless beans.
 - **Usage Example:**
 
 ```java
@@ -276,19 +287,22 @@ public class SingletonBean {
     // Bean details
 }
 ```
+
 **Pros:**
+
 - Efficient memory usage.
 - Ensures a single shared instance.
 
 **Cons:**
+
 - Not suitable for stateful beans.
 
 ## Prototype
 
 - **Description:** A new instance is created every time the bean is requested from the container.
 - **Characteristics:**
-    - Not managed by the container after creation.
-    - Suitable for stateful beans.
+  - Not managed by the container after creation.
+  - Suitable for stateful beans.
 - **Usage Example:**
 
 ```java
@@ -298,10 +312,13 @@ public class PrototypeBean {
     // Bean details
 }
 ```
+
 **Pros:**
+
 - Provides fresh instances for each use case.
 
 **Cons:**
+
 - Additional overhead in creating multiple instances.
 - Lifecycle management is limited as the container does not manage the bean after creation.
 
@@ -310,6 +327,7 @@ public class PrototypeBean {
 **Description:** (Web-Aware Scope) A single bean instance is created per HTTP request.
 
 **Characteristics:**
+
 - Tied to the lifecycle of an HTTP request.
 - Suitable for web applications handling user requests.
 
@@ -322,10 +340,13 @@ public class RequestScopedBean {
     // Bean details
 }
 ```
+
 **Pros:**
+
 - Isolates bean instances per request.
 
 **Cons:**
+
 - Only available in web-aware Spring ApplicationContexts.
 
 ## Session
@@ -333,8 +354,8 @@ public class RequestScopedBean {
 **Description:** (Web-Aware Scope) A single bean instance is created per HTTP session.
 
 **Characteristics:**
-    Tied to the lifecycle of an HTTP session.
-    Suitable for maintaining user-specific data across multiple requests.
+Tied to the lifecycle of an HTTP session.
+Suitable for maintaining user-specific data across multiple requests.
 
 **Usage Example:**
 
@@ -345,10 +366,13 @@ public class SessionScopedBean {
     // Bean details
 }
 ```
+
 **Pros:**
+
 - Maintains state across multiple requests within a session.
 
 **Cons:**
+
 - Increases memory usage as multiple instances are created for different sessions.
 
 ## Global Session
@@ -356,7 +380,7 @@ public class SessionScopedBean {
 **Description:** (Portlet-Aware Scope) A single bean instance is created per global HTTP session, typically used in Portlet-based web applications.
 
 **Characteristics:**
-    Similar to session scope but specific to Portlet environments.
+Similar to session scope but specific to Portlet environments.
 
 **Usage Example:**
 
@@ -369,6 +393,7 @@ public class GlobalSessionScopedBean {
 ```
 
 **Pros and Cons:**
+
 - Similar to session scope but applicable only in specific environments.
 
 ## Application
@@ -376,6 +401,7 @@ public class GlobalSessionScopedBean {
 **Description:** (Singleton with application-wide scope) A single bean instance is created for the entire lifecycle of the application.
 
 **Characteristics:**
+
 - Shared across all users and requests.
 - Suitable for application-wide resources.
 
@@ -390,6 +416,7 @@ public class ApplicationScopedBean {
 ```
 
 **Pros and Cons:**
+
 - Similar to singleton scope but with broader visibility.
 
 # Bean Lifecycle
@@ -404,7 +431,7 @@ Understanding the Bean Lifecycle is essential for managing resources effectively
 1. **BeanPostProcessors - Before Initialization:** The container invokes postProcessBeforeInitialization methods of all registered BeanPostProcessor instances.
 1. **InitializingBean and Init Methods:** If the bean implements InitializingBean or has an init-method specified, the container calls the afterPropertiesSet method or the specified init-method.
 1. **BeanPostProcessors - After Initialization:** The container invokes postProcessAfterInitialization methods of all registered BeanPostProcessor instances.
-Bean is Ready to Use: The bean is fully initialized and ready for use by the application.
+   Bean is Ready to Use: The bean is fully initialized and ready for use by the application.
 1. **Destruction:** Upon container shutdown, the container calls destroy methods on singleton beans.
 
 ## Lifecycle Callbacks
@@ -413,66 +440,71 @@ Beans can define lifecycle callbacks to perform custom initialization and destru
 
 1. InitializingBean and afterPropertiesSet():
 
-    Implementing InitializingBean:
-    ```java
-    public class MyBean implements InitializingBean {
-        @Override
-        public void afterPropertiesSet() throws Exception {
-            // Initialization logic
-        }
-    }
-    ```
+   Implementing InitializingBean:
+
+   ```java
+   public class MyBean implements InitializingBean {
+       @Override
+       public void afterPropertiesSet() throws Exception {
+           // Initialization logic
+       }
+   }
+   ```
+
 2. DisposableBean and destroy():
 
-    Implementing DisposableBean:
+   Implementing DisposableBean:
 
-    ```java
+   ```java
 
-    public class MyBean implements DisposableBean {
-        @Override
-        public void destroy() throws Exception {
-            // Cleanup logic
-        }
-    }
-    ```
+   public class MyBean implements DisposableBean {
+       @Override
+       public void destroy() throws Exception {
+           // Cleanup logic
+       }
+   }
+   ```
+
 3. Using @PostConstruct and @PreDestroy Annotations:
 
-    Example:
+   Example:
 
-    ```java
+   ```java
 
-    import javax.annotation.PostConstruct;
-    import javax.annotation.PreDestroy;
+   import javax.annotation.PostConstruct;
+   import javax.annotation.PreDestroy;
 
-    @Component
-    public class MyBean {
-        
-        @PostConstruct
-        public void init() {
-            // Initialization logic
-        }
+   @Component
+   public class MyBean {
 
-        @PreDestroy
-        public void cleanup() {
-            // Cleanup logic
-        }
-    }
-    ```
+       @PostConstruct
+       public void init() {
+           // Initialization logic
+       }
+
+       @PreDestroy
+       public void cleanup() {
+           // Cleanup logic
+       }
+   }
+   ```
+
 4. Specifying init-method and destroy-method in Configuration:
 
-    XML Configuration:
+   XML Configuration:
 
-    ```xml
-    <bean id="myBean" class="com.example.MyBean" init-method="init" destroy-method="cleanup" />
-    ```
-    Java-Based Configuration:
+   ```xml
+   <bean id="myBean" class="com.example.MyBean" init-method="init" destroy-method="cleanup" />
+   ```
 
-    ```java
-    @Bean(initMethod = "init", destroyMethod = "cleanup")
-    public MyBean myBean() {
-        return new MyBean();
-    }
-    ```
+   Java-Based Configuration:
+
+   ```java
+   @Bean(initMethod = "init", destroyMethod = "cleanup")
+   public MyBean myBean() {
+       return new MyBean();
+   }
+   ```
 
 ## BeanPostProcessor
 
@@ -503,6 +535,7 @@ public class CustomBeanPostProcessor implements BeanPostProcessor {
     }
 }
 ```
+
 **Usage:**
 
 Every bean defined in the container will pass through the CustomBeanPostProcessor, allowing for customized processing.
@@ -517,7 +550,7 @@ Description: A Factory Bean is a special type of bean that serves as a factory f
 
 **Implementation:**
 
-1. Implementing the `FactoryBean` Interface:
+1.  Implementing the `FactoryBean` Interface:
 
     ```java
     import org.springframework.beans.factory.FactoryBean;
@@ -543,17 +576,21 @@ Description: A Factory Bean is a special type of bean that serves as a factory f
         }
     }
     ```
-2. Using the Factory Bean:
 
-    ```java
-    ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-    MyProduct product = context.getBean(MyProduct.class);
-    ```
-**Pros:**
+2.  Using the Factory Bean:
+
+        ```java
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        MyProduct product = context.getBean(MyProduct.class);
+        ```
+
+    **Pros:**
+
 - Provides flexibility in bean creation.
 - Useful for creating beans with complex initialization logic.
 
 **Cons:**
+
 - Adds complexity to bean definitions.
 - Requires understanding of the FactoryBean interface.
 
@@ -563,7 +600,8 @@ Description: A Factory Bean is a special type of bean that serves as a factory f
 
 **Implementation:**
 
-1. Using the `@Lazy` Annotation:
+1.  Using the `@Lazy` Annotation:
+
     ```java
     import org.springframework.context.annotation.Lazy;
     import org.springframework.stereotype.Component;
@@ -576,22 +614,24 @@ Description: A Factory Bean is a special type of bean that serves as a factory f
         }
     }
     ```
-2. Global Lazy Initialization:
 
-    ```java
-    @Configuration
-    @ComponentScan(basePackages = "com.example")
-    @Lazy
-    public class AppConfig {}
-    ```
-**Usage:**
+2.  Global Lazy Initialization:
+
+        ```java
+        @Configuration
+        @ComponentScan(basePackages = "com.example")
+        @Lazy
+        public class AppConfig {}
+        ```
+
+    **Usage:**
 
 Beans marked with `@Lazy` are only instantiated when they are first requested, rather than at application startup.
 
 **Pros:**
 
 - Reduces initial load time.
--Saves resources by avoiding unnecessary bean creation.
+  -Saves resources by avoiding unnecessary bean creation.
 
 **Cons:**
 
@@ -604,25 +644,27 @@ Beans marked with `@Lazy` are only instantiated when they are first requested, r
 
 **Implementation:**
 
-1. Using `depends-on` Attribute in XML:
+1.  Using `depends-on` Attribute in XML:
 
     ```xml
     <bean id="beanA" class="com.example.BeanA" />
     <bean id="beanB" class="com.example.BeanB" depends-on="beanA" />
     ```
-2. Using @DependsOn Annotation:
 
-    ```java
-    import org.springframework.context.annotation.DependsOn;
-    import org.springframework.stereotype.Component;
+2.  Using @DependsOn Annotation:
 
-    @Component
-    @DependsOn("beanA")
-    public class BeanB {
-        // Bean details
-    }
-    ```
-**Usage:**
+        ```java
+        import org.springframework.context.annotation.DependsOn;
+        import org.springframework.stereotype.Component;
+
+        @Component
+        @DependsOn("beanA")
+        public class BeanB {
+            // Bean details
+        }
+        ```
+
+    **Usage:**
 
 Ensures that `beanA` is initialized before `beanB`.
 
@@ -653,19 +695,20 @@ We have two beans: `UserRepository` and `UserService`. `UserService` depends on 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
+
     <!-- Define UserRepository bean -->
     <bean id="userRepository" class="com.example.repository.UserRepositoryImpl" />
-    
+
     <!-- Define UserService bean with constructor injection -->
     <bean id="userService" class="com.example.service.UserService">
         <constructor-arg ref="userRepository" />
     </bean>
-    
+
 </beans>
 ```
+
 **Java Classes:**
 
 ```java
@@ -721,6 +764,7 @@ public class User {
     }
 }
 ```
+
 **Main Application:**
 
 ```java
@@ -737,6 +781,7 @@ public class Application {
     }
 }
 ```
+
 **Console Output:**
 
 ```sql
@@ -824,6 +869,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.example")
 public class AppConfig {}
 ```
+
 **Main Application:**
 
 ```java
@@ -840,12 +886,14 @@ public class Application {
     }
 }
 ```
+
 **Console Output:**
 
 ```sql
 Registering user: Bob
 User saved: Bob
 ```
+
 ## Example 3: Java-Based Configuration
 
 **Scenario:**
@@ -931,6 +979,7 @@ public class AppConfig {
     }
 }
 ```
+
 **Main Application:**
 
 ```java
@@ -947,49 +996,60 @@ public class Application {
     }
 }
 ```
+
 **Console Output:**
 
 ```sql
 Registering user: Charlie
 User saved: Charlie
 ```
+
 # Best Practices
 
 - Prefer Constructor Injection:
-    - Ensures that required dependencies are provided and promotes immutability.
-    - Facilitates easier testing by making dependencies explicit.
+
+  - Ensures that required dependencies are provided and promotes immutability.
+  - Facilitates easier testing by making dependencies explicit.
 
 - Use Setter Injection for Optional Dependencies:
-    - Allows dependencies to be set after object creation.
-    - Useful for optional or configurable dependencies.
+
+  - Allows dependencies to be set after object creation.
+  - Useful for optional or configurable dependencies.
 
 - Avoid Field Injection When Possible:
-    - Keeps dependencies explicit and enhances testability.
-    - Makes the codebase cleaner and easier to understand.
+
+  - Keeps dependencies explicit and enhances testability.
+  - Makes the codebase cleaner and easier to understand.
 
 - Leverage Bean Scopes Appropriately:
-    - Use singleton for stateless beans.
-    - Use prototype for stateful or non-shared beans.
+
+  - Use singleton for stateless beans.
+  - Use prototype for stateful or non-shared beans.
 
 - Manage Bean Dependencies Carefully:
-    - Avoid circular dependencies as they can lead to runtime errors.
-    - Use @Lazy or @DependsOn to resolve complex dependencies.
+
+  - Avoid circular dependencies as they can lead to runtime errors.
+  - Use @Lazy or @DependsOn to resolve complex dependencies.
 
 - Organize Configuration Logically:
-    - Group related beans together.
-    - Use separate configuration classes for different modules or layers.
+
+  - Group related beans together.
+  - Use separate configuration classes for different modules or layers.
 
 - Use Qualifiers and Primary Beans to Resolve Ambiguities:
-    - When multiple beans of the same type exist, use @Qualifier or @Primary to specify which one to inject.
+
+  - When multiple beans of the same type exist, use @Qualifier or @Primary to specify which one to inject.
 
 - Document Bean Configurations:
-    - Provide clear documentation for complex bean setups to aid future maintenance and onboarding.
+
+  - Provide clear documentation for complex bean setups to aid future maintenance and onboarding.
 
 - Utilize Spring Profiles for Environment-Specific Beans:
-    - Use @Profile to define beans for specific environments (e.g., development, production).
+
+  - Use @Profile to define beans for specific environments (e.g., development, production).
 
 - Implement Lifecycle Callbacks Thoughtfully:
-    - Use @PostConstruct and @PreDestroy for custom initialization and cleanup logic.
+  - Use @PostConstruct and @PreDestroy for custom initialization and cleanup logic.
 
 # Conclusion
 
@@ -1006,11 +1066,3 @@ Beans and the Spring Container are pivotal elements in the Spring Framework, ena
 - **Best Practices:** Adhering to best practices ensures a clean, efficient, and maintainable codebase.
 
 By mastering Beans and the Spring Container, developers can build sophisticated applications that are easy to manage, test, and extend, leveraging Spring's powerful ecosystem to meet diverse development challenges.
-
-Further Reading and Resources:
-
-    Spring Framework Documentation
-    Official Spring Guides
-    Spring in Action by Craig Walls
-    Baeldung's Spring Tutorials
-    Spring Boot Reference Guide
