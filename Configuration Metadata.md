@@ -41,19 +41,20 @@ Spring supports various methods for providing Configuration Metadata, each with 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
+
     <!-- Bean Definition for UserRepository -->
     <bean id="userRepository" class="com.example.repository.UserRepositoryImpl" />
-    
+
     <!-- Bean Definition for UserService with Dependency Injection -->
     <bean id="userService" class="com.example.service.UserService">
         <property name="userRepository" ref="userRepository" />
     </bean>
-    
+
 </beans>
 ```
+
 **Usage:**
 
 ```java
@@ -69,6 +70,7 @@ public class Application {
     }
 }
 ```
+
 **Pros:**
 
 - Clear separation between configuration and code.
@@ -162,6 +164,7 @@ public class Application {
     }
 }
 ```
+
 **Pros:**
 
 - Less verbose and more intuitive.
@@ -275,6 +278,7 @@ public class Application {
     }
 }
 ```
+
 **Pros:**
 
 - Type-safe and refactor-friendly.
@@ -289,6 +293,7 @@ public class Application {
 # Key Components of Configuration Metadata
 
 Understanding the components that make up Configuration Metadata is essential for effective Spring configuration. These components dictate how beans are defined, how they interact, and how they behave within the application context.
+
 ## Bean Definitions
 
 A Bean Definition is a description of a bean, including its class, properties, constructor arguments, and other configuration settings. It tells the Spring container how to instantiate and configure the bean.
@@ -312,6 +317,7 @@ A Bean Definition is a description of a bean, including its class, properties, c
     <init-method="init" destroy-method="cleanup" />
 </bean>
 ```
+
 ## Bean Properties and Dependencies
 
 Bean Properties represent the configurable attributes of a bean. Dependencies are other beans or resources that a bean requires to function correctly.
@@ -330,6 +336,7 @@ public UserService userService() {
     return new UserService(userRepository(), userValidator());
 }
 ```
+
 ## Bean Scopes
 
 Bean Scope determines the lifecycle and visibility of a bean within the Spring container. The primary scopes in Spring are:
@@ -350,6 +357,7 @@ public UserService userService() {
     return new UserService(userRepository());
 }
 ```
+
 ## Lifecycle Callbacks
 
 Lifecycle Callbacks allow beans to perform custom initialization and destruction logic during their lifecycle within the Spring container.
@@ -357,13 +365,13 @@ Lifecycle Callbacks allow beans to perform custom initialization and destruction
 **Mechanisms:**
 
 - Implementing Interfaces:
-    - InitializingBean: Defines afterPropertiesSet() for initialization.
-    - DisposableBean: Defines destroy() for cleanup.
+  - InitializingBean: Defines afterPropertiesSet() for initialization.
+  - DisposableBean: Defines destroy() for cleanup.
 - Annotations:
-    - @PostConstruct: Marks a method to be executed after dependency injection.
-    - @PreDestroy: Marks a method to be executed before bean destruction.
+  - @PostConstruct: Marks a method to be executed after dependency injection.
+  - @PreDestroy: Marks a method to be executed before bean destruction.
 - Configuration Methods:
-    - init-method and destroy-method attributes in XML or @Bean methods in Java-based configuration.
+  - init-method and destroy-method attributes in XML or @Bean methods in Java-based configuration.
 
 **Example:**
 
@@ -382,6 +390,7 @@ public class UserService implements InitializingBean, DisposableBean {
     }
 }
 ```
+
 ## Profiles and Conditional Configuration
 
 Profiles allow beans to be registered conditionally based on the active environment (e.g., development, production). This facilitates environment-specific configurations.
@@ -410,9 +419,11 @@ public class AppConfig {
     }
 }
 ```
+
 # Configuration Metadata Mechanisms
 
 Spring provides several mechanisms to process and interpret Configuration Metadata, determining how beans are instantiated and managed within the container.
+
 ## Component Scanning
 
 Component Scanning is a mechanism where the Spring container automatically detects and registers beans based on classpath scanning and the presence of specific annotations (e.g., @Component, @Service, @Repository, @Controller).
@@ -420,12 +431,12 @@ Component Scanning is a mechanism where the Spring container automatically detec
 **How It Works:**
 
 1. Enable Component Scanning:
-    - Using @ComponentScan in Java-based configuration.
-    - Using <context:component-scan> in XML-based configuration.
+   - Using @ComponentScan in Java-based configuration.
+   - Using <context:component-scan> in XML-based configuration.
 1. Annotated Classes:
-    - Classes annotated with @Component or its specializations are detected and registered as beans.
+   - Classes annotated with @Component or its specializations are detected and registered as beans.
 1. Dependency Injection:
-    - Detected beans can have their dependencies injected automatically using @Autowired.
+   - Detected beans can have their dependencies injected automatically using @Autowired.
 
 **Example (Java-Based Configuration):**
 
@@ -434,6 +445,7 @@ Component Scanning is a mechanism where the Spring container automatically detec
 @ComponentScan(basePackages = "com.example")
 public class AppConfig {}
 ```
+
 ## Explicit Bean Declaration
 
 Explicit Bean Declaration involves defining beans manually in configuration files or classes without relying on component scanning. This approach provides precise control over bean creation and configuration.
@@ -461,16 +473,18 @@ public class AppConfig {
     }
 }
 ```
+
 # Advanced Configuration Metadata Features
 
 Spring's Configuration Metadata extends beyond basic bean definitions, offering advanced features to handle complex application requirements.
+
 ## Factory Beans
 
 **Description:** A Factory Bean is a special type of bean that serves as a factory for creating other beans. It provides custom instantiation logic, allowing for greater flexibility in bean creation.
 
 **Implementation:**
 
-1. Implement the FactoryBean Interface:
+1.  Implement the FactoryBean Interface:
 
     ```java
     import org.springframework.beans.factory.FactoryBean;
@@ -496,20 +510,22 @@ Spring's Configuration Metadata extends beyond basic bean definitions, offering 
         }
     }
     ```
-2. Using the Factory Bean:
 
-    ```java
-    import org.springframework.context.ApplicationContext;
-    import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+2.  Using the Factory Bean:
 
-    public class Application {
-        public static void main(String[] args) {
-            ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-            MyProduct product = context.getBean(MyProduct.class);
+        ```java
+        import org.springframework.context.ApplicationContext;
+        import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+        public class Application {
+            public static void main(String[] args) {
+                ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+                MyProduct product = context.getBean(MyProduct.class);
+            }
         }
-    }
-    ```
-**Pros:**
+        ```
+
+    **Pros:**
 
 - Provides flexibility in bean creation.
 - Useful for creating beans with complex initialization logic.
@@ -523,15 +539,14 @@ Spring's Configuration Metadata extends beyond basic bean definitions, offering 
 
 Description: When multiple beans of the same type exist, qualifiers and primary beans help resolve ambiguity during dependency injection.
 
-Annotations:
+**Annotations:**
 
-    @Qualifier: Specifies which bean to inject by name or identifier.
-    @Primary: Marks a bean as the primary candidate when multiple beans of the same type are present.
+- **@Qualifier**: Specifies which bean to inject by name or identifier.
+- **@Primary**: Marks a bean as the primary candidate when multiple beans of the same type are present.
 
-Example Using @Qualifier:
+**Example Using `@Qualifier`:**
 
-java
-
+```java
 @Repository
 @Qualifier("userRepo")
 public class UserRepositoryImpl implements UserRepository { /* ... */ }
@@ -549,11 +564,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 }
+```
 
-Example Using @Primary:
+**Example Using `@Primary`:**
 
-java
-
+```java
 @Repository
 @Primary
 public class UserRepositoryImpl implements UserRepository { /* ... */ }
@@ -570,30 +585,30 @@ public class UserService {
         this.userRepository = userRepository; // UserRepositoryImpl is injected due to @Primary
     }
 }
+```
 
-Pros:
+**Pros:**
 
-    Resolves bean ambiguity effectively.
-    Provides flexibility in selecting specific bean instances.
+- Resolves bean ambiguity effectively.
+- Provides flexibility in selecting specific bean instances.
 
-Cons:
+**Cons:**
 
-    Can lead to confusion if overused or misapplied.
-    Requires careful management to avoid unintended injections.
+- Can lead to confusion if overused or misapplied.
+- Requires careful management to avoid unintended injections.
 
 ## Conditional Beans
 
-Description: Conditional Beans allow for the creation of beans based on specific conditions, enhancing configuration flexibility.
+**Description:** Conditional Beans allow for the creation of beans based on specific conditions, enhancing configuration flexibility.
 
-Annotations:
+**Annotations:**
 
-    @Conditional: Defines a custom condition for bean registration.
-    @Profile: Specifies the profile(s) under which a bean should be registered.
+- `@Conditional`: Defines a custom condition for bean registration.
+- `@Profile`: Specifies the profile(s) under which a bean should be registered.
 
-Example Using @Profile:
+**Example Using `@Profile`:**
 
-java
-
+```java
 @Configuration
 public class AppConfig {
 
@@ -609,31 +624,31 @@ public class AppConfig {
         // Production DataSource
     }
 }
+```
 
-Pros:
+**Pros:**
 
-    Enables environment-specific configurations.
-    Enhances modularity and flexibility.
+- Enables environment-specific configurations.
+- Enhances modularity and flexibility.
 
-Cons:
+**Cons:**
 
-    Requires proper management of profiles and conditions.
-    Can complicate the configuration if not organized properly.
+- Requires proper management of profiles and conditions.
+- Can complicate the configuration if not organized properly.
 
 ## Externalized Configuration
 
-Description: Externalized Configuration allows for the management of configuration properties outside the application code, enabling dynamic and environment-specific configurations.
+**Description:** Externalized Configuration allows for the management of configuration properties outside the application code, enabling dynamic and environment-specific configurations.
 
-Mechanisms:
+**Mechanisms:**
 
-    Property Files: .properties or .yaml files.
-    Environment Variables: Variables defined in the system environment.
-    Command-Line Arguments: Parameters passed during application startup.
+- **Property Files**: `.properties` or `.yaml` files.
+- **Environment Variables**: Variables defined in the system environment.
+- **Command-Line Arguments**: Parameters passed during application startup.
 
-Example Using @Value:
+**Example Using `@Value`:**
 
-java
-
+```java
 @Component
 public class MyBean {
 
@@ -644,99 +659,100 @@ public class MyBean {
         System.out.println("Application Name: " + appName);
     }
 }
+```
 
-Configuration File (application.properties):
+**Configuration File (`application.properties`):**
 
-mathematica
-
+```mathematica
 app.name=My Spring Application
+```
 
-Pros:
+**Pros:**
 
-    Decouples configuration from code.
-    Facilitates environment-specific settings.
+- Decouples configuration from code.
+- Facilitates environment-specific settings.
 
-Cons:
+**Cons**:
 
-    Requires careful management of property files.
-    Potential security concerns with sensitive data.
+- Requires careful management of property files.
+- Potential security concerns with sensitive data.
 
 # Best Practices for Using Configuration Metadata
 
 Adhering to best practices ensures that your Spring configurations are maintainable, scalable, and efficient.
 
-    Prefer Java-Based Configuration:
-        Offers type safety and refactor-friendly configurations.
-        Leverages Java's programming capabilities for dynamic configurations.
+- **Prefer Java-Based Configuration**:
+  Offers type safety and refactor-friendly configurations.
+  Leverages Java's programming capabilities for dynamic configurations.
 
-    Use Constructor Injection Over Setter or Field Injection:
-        Ensures that required dependencies are provided.
-        Promotes immutability and easier testing.
+- **Use Constructor Injection Over Setter or Field Injection**:
+  Ensures that required dependencies are provided.
+  Promotes immutability and easier testing.
 
-    Leverage Component Scanning Wisely:
-        Organize packages logically to prevent unintended bean registrations.
-        Use basePackages attribute judiciously to control scanning scope.
+- **Leverage Component Scanning Wisely**:
+  Organize packages logically to prevent unintended bean registrations.
+  Use basePackages attribute judiciously to control scanning scope.
 
-    Avoid XML Configurations for New Projects:
-        Opt for annotations or Java-based configurations for modern applications.
-        Reserve XML configurations for legacy systems or specific scenarios.
+- **Avoid XML Configurations for New Projects**:
+  Opt for annotations or Java-based configurations for modern applications.
+  Reserve XML configurations for legacy systems or specific scenarios.
 
-    Utilize Profiles for Environment-Specific Configurations:
-        Define beans and settings specific to development, testing, production, etc.
-        Activate profiles appropriately to manage configurations across environments.
+- **Utilize Profiles for Environment-Specific Configurations**:
+  Define beans and settings specific to development, testing, production, etc.
+  Activate profiles appropriately to manage configurations across environments.
 
-    Keep Configuration Classes Organized:
-        Segregate configurations based on functional modules or layers.
-        Maintain clear and concise configuration classes to enhance readability.
+- **Keep Configuration Classes Organized**:
+  Segregate configurations based on functional modules or layers.
+  Maintain clear and concise configuration classes to enhance readability.
 
-    Use @Primary and @Qualifier Annotations Appropriately:
-        Clearly indicate primary beans to resolve ambiguity.
-        Use qualifiers to inject specific bean instances when multiple candidates exist.
+- **Use @Primary and @Qualifier Annotations Appropriately**:
+  Clearly indicate primary beans to resolve ambiguity.
+  Use qualifiers to inject specific bean instances when multiple candidates exist.
 
-    Externalize Configuration Properties:
-        Store configurable properties in external files or environment variables.
-        Avoid hardcoding configuration values within the application code.
+- **Externalize Configuration Properties**:
+  Store configurable properties in external files or environment variables.
+  Avoid hardcoding configuration values within the application code.
 
-    Implement Lifecycle Callbacks Thoughtfully:
-        Use @PostConstruct and @PreDestroy for essential initialization and cleanup.
-        Avoid overusing lifecycle callbacks to maintain simplicity.
+- **Implement Lifecycle Callbacks Thoughtfully**:
+  Use @PostConstruct and @PreDestroy for essential initialization and cleanup.
+  Avoid overusing lifecycle callbacks to maintain simplicity.
 
-    Document Configuration Metadata:
-        Provide clear documentation for complex configurations.
-        Ensure that new developers can understand and manage configurations effectively.
+- **Document Configuration Metadata**:
+  Provide clear documentation for complex configurations.
+  Ensure that new developers can understand and manage configurations effectively.
 
 # Practical Examples
 
 To solidify the understanding of Configuration Metadata, let's explore practical examples using XML-Based, Annotation-Based, and Java-Based configurations.
+
 ## Example 1: XML-Based Configuration
 
-Scenario: Define two beans, UserRepository and UserService, where UserService depends on UserRepository.
+**Scenario:** Define two beans, UserRepository and UserService, where UserService depends on UserRepository.
 
-Configuration:
+**Configuration:**
 
-xml
-
+```xml
 <!-- applicationContext.xml -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
+
     <!-- Bean Definition for UserRepository -->
     <bean id="userRepository" class="com.example.repository.UserRepositoryImpl" />
-    
+
     <!-- Bean Definition for UserService with Dependency Injection -->
     <bean id="userService" class="com.example.service.UserService">
         <property name="userRepository" ref="userRepository" />
     </bean>
-    
+
 </beans>
+```
 
-Java Classes:
+**Java Classes:**
 
-java
-
+```java
 // UserRepository.java
 package com.example.repository;
 
@@ -802,22 +818,22 @@ public class Application {
         userService.registerUser(new User("Alice"));
     }
 }
+```
 
-Console Output:
+**Console Output:**
 
-sql
-
+```sql
 Registering user: Alice
 User saved: Alice
+```
 
 ## Example 2: Annotation-Based Configuration
 
-Scenario: Same as Example 1 but using annotations for configuration.
+**Scenario:** Same as Example 1 but using annotations for configuration.
 
-Java Classes:
+**Java Classes:**
 
-java
-
+```java
 // UserRepository.java
 package com.example.repository;
 
@@ -900,22 +916,22 @@ public class Application {
         userService.registerUser(new User("Bob"));
     }
 }
+```
 
-Console Output:
+**Console Output:**
 
-sql
-
+```sql
 Registering user: Bob
 User saved: Bob
+```
 
 ## Example 3: Java-Based Configuration
 
-Scenario: Configure beans using Java-based configuration without relying on annotations like @Component.
+**Scenario:** Configure beans using Java-based configuration without relying on annotations like @Component.
 
-Java Classes:
+**Java Classes:**
 
-java
-
+```java
 // UserRepository.java
 package com.example.repository;
 
@@ -1004,13 +1020,14 @@ public class Application {
         userService.registerUser(new User("Charlie"));
     }
 }
+```
 
-Console Output:
+**Console Output:**
 
-sql
-
+```sql
 Registering user: Charlie
 User saved: Charlie
+```
 
 # Conclusion
 
@@ -1019,21 +1036,21 @@ Configuration Metadata in Spring is a powerful mechanism that dictates how beans
 **Key Takeaways:**
 
 1. **Flexibility in Configuration:**
-    Spring offers multiple methods (XML, annotations, Java-based) to define Configuration Metadata, catering to different project needs and developer preferences.
+   Spring offers multiple methods (XML, annotations, Java-based) to define Configuration Metadata, catering to different project needs and developer preferences.
 
 1. **Bean Definitions are Central:**
-    Clearly defining beans, their classes, dependencies, and scopes is essential for effective application configuration.
+   Clearly defining beans, their classes, dependencies, and scopes is essential for effective application configuration.
 
 1. **Modern Approaches Favor Annotations and Java Config:**
-    While XML-based configuration is still supported, annotation-based and Java-based configurations are more prevalent in contemporary Spring applications due to their conciseness and type safety.
+   While XML-based configuration is still supported, annotation-based and Java-based configurations are more prevalent in contemporary Spring applications due to their conciseness and type safety.
 
 1. **Advanced Features Enhance Configuration:**
-    Factory Beans, qualifiers, profiles, and conditional configurations provide greater control and adaptability in managing application components.
+   Factory Beans, qualifiers, profiles, and conditional configurations provide greater control and adaptability in managing application components.
 
 1. **Best Practices Ensure Maintainability:**
-    Adhering to best practices such as preferring constructor injection, organizing configuration logically, and externalizing properties contributes to cleaner and more manageable codebases.
+   Adhering to best practices such as preferring constructor injection, organizing configuration logically, and externalizing properties contributes to cleaner and more manageable codebases.
 
 1. **Continuous Learning is Essential:**
-    As Spring evolves, staying updated with the latest configuration techniques and features ensures that your applications remain robust and efficient.
+   As Spring evolves, staying updated with the latest configuration techniques and features ensures that your applications remain robust and efficient.
 
 By mastering Configuration Metadata, you unlock the full potential of the Spring Framework, enabling you to craft applications that are not only functional but also resilient and adaptable to changing requirements.
