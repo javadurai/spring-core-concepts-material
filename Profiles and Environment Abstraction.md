@@ -329,9 +329,9 @@ Configure different DataSource beans for development and production environments
 
 5.  Console Output:
 
-        ```less
-        DataSource URL: jdbc:h2:mem:devdb
-        ```
+    ```less
+    DataSource URL: jdbc:h2:mem:devdb
+    ```
 
     **Explanation:**
 
@@ -395,26 +395,26 @@ Register a bean only when the application is running in the production environme
 
 1.  Injecting the SecurityService Bean:
 
-        ```java
-        package com.example.service;
+    ```java
+    package com.example.service;
 
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Service;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.stereotype.Service;
 
-        @Service
-        public class AuthenticationService {
+    @Service
+    public class AuthenticationService {
 
-            private final SecurityService securityService;
+        private final SecurityService securityService;
 
-            @Autowired
-            public AuthenticationService(SecurityService securityService) {
-                this.securityService = securityService;
-            }
-
-            public void authenticate(String user) {
-                securityService.authenticate(user);
-            }
+        @Autowired
+        public AuthenticationService(SecurityService securityService) {
+            this.securityService = securityService;
         }
+
+        public void authenticate(String user) {
+            securityService.authenticate(user);
+        }
+    }
         ```
 
     **Explanation:**
@@ -509,10 +509,10 @@ Retrieve property values based on the active profile using the Environment abstr
 
 1.  Console Output (Production Profile):
 
-        ```yaml
-        Feature X Enabled: true
-        Feature Y Enabled: true
-        ```
+    ```yaml
+    Feature X Enabled: true
+    Feature Y Enabled: true
+    ```
 
     **Explanation:**
 
@@ -591,22 +591,22 @@ Profiles are instrumental in testing, allowing developers to activate specific c
 
 1.  Activate the Test Profile in Tests:
 
-        ```java
-        @RunWith(SpringRunner.class)
-        @SpringBootTest
-        @ActiveProfiles("test")
-        public class PaymentServiceTest {
+    ```java
+    @RunWith(SpringRunner.class)
+    @SpringBootTest
+    @ActiveProfiles("test")
+    public class PaymentServiceTest {
 
-            @Autowired
-            private PaymentService paymentService;
+        @Autowired
+        private PaymentService paymentService;
 
-            @Test
-            public void testProcessPayment() {
-                paymentService.processPayment(100.0);
-                // Assertions and verifications
-            }
+        @Test
+        public void testProcessPayment() {
+            paymentService.processPayment(100.0);
+            // Assertions and verifications
         }
-        ```
+    }
+    ```
 
     **Explanation:**
 
